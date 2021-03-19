@@ -1,8 +1,50 @@
+export const START_SMURF_FETCH = "START_SMURF_FETCH"
+export const SUCCESSFUL_SMURF_FETCH = "SUCCESSFUL_SMURF_FETCH"
+export const FAILED_SMURF_FETCH = "FAILED_SMURF_FETCH"
+export const ADD_SMURF = "ADD_SMURF"
+export const ADD_ERROR = "ADD_ERROR"
+
+
 
 export const initialState = {
+    smurfs: [],
+    isLoading: false,
+    errors: ""
 }
 
-const reducer = ()=>{
+const reducer = (state = initialState, action) => {
+    switch(action.type) {
+        case START_SMURF_FETCH:
+            return {
+                ...state,
+                isLoading: true
+            };
+        case SUCCESSFUL_SMURF_FETCH:
+            return {
+                ...state,
+                isLoading: false,
+                smurfs: action.payload,
+                errors: ""
+            };
+        case FAILED_SMURF_FETCH:
+            return {
+                ...state,
+                isLoading: false,
+                errors: action.payload
+            };
+        case ADD_SMURF:
+            return {
+                ...state,
+                smurfs: [...state.smurfs, action.payload]
+            };
+        case ADD_ERROR:
+            return {
+                ...state,
+                errors: action.payload
+            };
+        default:
+            return state;
+    }
 }
 
 export default reducer;
